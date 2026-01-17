@@ -1,5 +1,5 @@
 import constants from '../constants.js';
-import userService from '../services/user.service.js';
+import userService from '../services/users.service.js';
 import ApiErrorUtils from '../utils/ApiErrorUtils.js';
 import JwtUtils from '../utils/JwtUtils.js';
 
@@ -35,13 +35,27 @@ function authorized(roles = []) {
   ];
 }
 
+// ============================================
+// MAIN EXPORTS
+// ============================================
 export const isAuthorized = authorized();
 export const isAdmin = authorized(roleAdmin);
 export const isStaff = authorized(roleStaff);
 export const isAdminOrStaff = authorized(roleAdminOrStaff);
 export const isCustomer = authorized(roleCustomer);
 
-// allow unauthenticated
+// ============================================
+// ALIASES FOR COMPATIBILITY
+// ============================================
+export const protect = isAuthorized;
+export const admin = isAdmin;
+export const staff = isStaff;
+export const customer = isCustomer;
+export const adminOrStaff = isAdminOrStaff;
+
+// ============================================
+// GUEST OR AUTHORIZED
+// ============================================
 export const isGuestOrAuthorized = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization'];
   if (token) {
@@ -55,4 +69,4 @@ export const isGuestOrAuthorized = (req, res, next) => {
 
   req.userIdentifier = uid;
   next();
-}
+};

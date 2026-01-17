@@ -2,6 +2,7 @@ import http from 'http';
 //import cron from 'node-cron';
 import os from 'os';
 import { Server as SocketServer } from 'socket.io';
+import mongoose from 'mongoose';
 
 import app from './app.js';
 import configs from './configs.js';
@@ -9,6 +10,7 @@ import socketHandler from './socket.io.js';
 import LogUtils from './utils/LogUtils.js';
 
 import * as dotenv from 'dotenv';
+mongoose.set('strictQuery', false);
 dotenv.config();
 
 const serverIp = Object.entries((Object.entries(os.networkInterfaces())[0]))?.[1]?.[1]?.filter(x => x.family === 'IPv4')?.[0]?.address || '';

@@ -1,6 +1,5 @@
 import ResponseUtils from '../utils/ResponseUtils.js';
-import userService from '../services/user.service.js';
-import addressService from '../services/addresses.service.js';
+import userService from '../services/users.service.js';
 import authServices from '../services/auth.service.js';
 
 export const getInfo = async (req, res, next) => {
@@ -22,10 +21,9 @@ export const updateInfo = async (req, res, next) => {
         res,
         `Update info successfully!`,
         updateUser
-        // formatOneUser(updateUser, req)
       );
     } else {
-      ResponseUtils.status404(res, `User '${identity}' not found!`);
+      ResponseUtils.status404(res, `User not found!`);
     }
   } catch (err) { next(err); }
 }
@@ -36,16 +34,14 @@ export const updateEmail = async (req, res, next) => {
     if (updateUser) {
       ResponseUtils.status200(
         res,
-        `Update info successfully!`,
+        `Update email successfully!`,
         updateUser
-        // formatOneUser(updateUser, req)
       );
     } else {
-      ResponseUtils.status404(res, `User '${identity}' not found!`);
+      ResponseUtils.status404(res, `User not found!`);
     }
   } catch (err) { next(err); }
 }
-
 
 export const updatePhone = async (req, res, next) => {
   try {
@@ -53,16 +49,14 @@ export const updatePhone = async (req, res, next) => {
     if (updateUser) {
       ResponseUtils.status200(
         res,
-        `Update info successfully!`,
+        `Update phone successfully!`,
         updateUser
-        // formatOneUser(updateUser, req)
       );
     } else {
-      ResponseUtils.status404(res, `User '${identity}' not found!`);
+      ResponseUtils.status404(res, `User not found!`);
     }
   } catch (err) { next(err); }
 }
-
 
 export const changePassword = async (req, res, next) => {
   try {
@@ -95,46 +89,8 @@ export const isExistedPhone = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-
-// Add address --------------------------------------------
-export const getAddresses = async (req, res, next) => {
-  try {
-    const addresses = await addressService.getList(req.user._id);
-    ResponseUtils.status200(res, `Get list addresses successfully!`, addresses);
-  } catch (err) { next(err); }
-};
-
-export const addAddress = async (req, res, next) => {
-  try {
-    const address = await addressService.add(req.user._id, req.body);
-    ResponseUtils.status201(res, `Add address successfully!`, address);
-  } catch (err) { next(err); }
-};
-
-export const updateAddress = async (req, res, next) => {
-  try {
-    const { addressId } = req.params;
-    const address = await addressService.update(req.user._id, addressId, req.body);
-    ResponseUtils.status200(res, `Update address successfully!`, address);
-  } catch (err) { next(err); }
-};
-
-export const setDefaultAddress = async (req, res, next) => {
-  try {
-    const { addressId } = req.params;
-    const address = await addressService.setDefault(req.user._id, addressId);
-    ResponseUtils.status200(res, `Set address default successfully!`, address);
-  } catch (err) { next(err); }
-};
-
-export const deleteAddress = async (req, res, next) => {
-  try {
-    const { addressId } = req.params;
-    const isDeleted = await addressService.remove(req.user._id, addressId);
-    if (isDeleted) {
-      ResponseUtils.status200(res, `Delete address successfully!`);
-    } else {
-      ResponseUtils.status404(res, `Error when delete address!`);
-    }
-  } catch (err) { next(err); }
-}
+// ============================================
+// NOTE: Address management removed
+// Movie streaming platform doesn't need shipping addresses
+// If needed in future, can be re-added
+// ============================================

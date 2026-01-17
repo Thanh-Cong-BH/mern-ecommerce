@@ -1,0 +1,465 @@
+{
+  "info": {
+    "name": "Movie Streaming API",
+    "description": "Complete API collection for Movie Streaming Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "movie_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Token received\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.token).to.exist;",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"Test123456\",\n  \"full_name\": \"Test User\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Save token\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Test123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account",
+              "host": ["{{base_url}}"],
+              "path": ["account"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Save first movie ID\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data.movies && jsonData.data.movies.length > 0) {",
+                  "        pm.collectionVariables.set(\"movie_id\", jsonData.data.movies[0]._id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["movie"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?search=avengers&genre=Action",
+              "host": ["{{base_url}}"],
+              "path": ["movies"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "avengers"
+                },
+                {
+                  "key": "genre",
+                  "value": "Action"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Movie Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/{{movie_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "{{movie_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Trending Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/trending",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "trending"]
+            }
+          }
+        },
+        {
+          "name": "Get Streaming URL",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/{{movie_id}}/stream",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "{{movie_id}}", "stream"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Watchlist",
+      "item": [
+        {
+          "name": "Add to Watchlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movie\": \"{{movie_id}}\",\n  \"status\": \"want_to_watch\",\n  \"priority\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/watchlist",
+              "host": ["{{base_url}}"],
+              "path": ["watchlist"]
+            }
+          }
+        },
+        {
+          "name": "Get My Watchlist",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlist",
+              "host": ["{{base_url}}"],
+              "path": ["watchlist"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "View History",
+      "item": [
+        {
+          "name": "Record Watch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"web\",\n  \"quality\": \"1080p\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/history/{{movie_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["history", "{{movie_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Progress",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"progress\": 3600,\n  \"duration\": 7200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/history/{{movie_id}}/progress",
+              "host": ["{{base_url}}"],
+              "path": ["history", "{{movie_id}}", "progress"]
+            }
+          }
+        },
+        {
+          "name": "Get Continue Watching",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/history/continue-watching",
+              "host": ["{{base_url}}"],
+              "path": ["history", "continue-watching"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Get Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/plans",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "plans"]
+            }
+          }
+        },
+        {
+          "name": "Get My Subscription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/me",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "me"]
+            }
+          }
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plan\": \"premium\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/subscriptions",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 9,\n  \"title\": \"Amazing movie!\",\n  \"comment\": \"One of the best movies I've ever seen.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/movie/{{movie_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "movie", "{{movie_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Movie Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/movie/{{movie_id}}?sort=newest",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "movie", "{{movie_id}}"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "newest"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

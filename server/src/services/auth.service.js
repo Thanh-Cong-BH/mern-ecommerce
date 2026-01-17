@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
 import RefreshToken from '../models/refresh-token.model.js';
-import userService from './user.service.js';
+import userService from './users.service.js';
 import firebaseService from './firebase.service.js';
 import * as otpService from './otp.service.js';
 import * as mailerService from './mailer.service.js';

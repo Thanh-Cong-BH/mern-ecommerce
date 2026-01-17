@@ -1,155 +1,32 @@
 {
-  "name": "mern.ecommerce.client",
-  "version": "0.1.0",
-  "description": "",
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "prebuild": "set \"GENERATE_SOURCEMAP=false\"",
-    "build": "react-scripts build",
-    "pullrequest": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx ./src",
-    "lint:fix": "eslint --fix --ext .js,.jsx ./src"
-  },
-  "contributors": [
-    {
-      "name": "Khanh Lam",
-      "email": "quockhanhdev@gmail.com",
-      "url": "https://quockhanh.dev/"
-    },
-    {
-      "name": "Hoang Ho",
-      "email": "hoangho1147@gmail.com"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/quockhanhtn/mern-ecommerce.git",
-    "directory": "/client"
-  },
-  "bugs": {
-    "url": "https://github.com/quockhanhtn/mern-ecommerce/issues"
-  },
-  "license": "MIT",
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "@fullcalendar/daygrid": "^5.7.0",
-    "@fullcalendar/interaction": "^5.7.0",
-    "@fullcalendar/list": "^5.7.0",
-    "@fullcalendar/react": "^5.7.0",
-    "@fullcalendar/timegrid": "^5.7.0",
-    "@fullcalendar/timeline": "^5.7.0",
-    "@iconify/icons-eva": "^1.1.0",
-    "@iconify/icons-fluent": "^1.1.31",
-    "@iconify/icons-ic": "^1.1.4",
-    "@iconify/react": "^1.1.4",
-    "@material-ui/core": "^5.0.0-alpha.34",
-    "@material-ui/icons": "^5.0.0-alpha.34",
-    "@material-ui/lab": "^5.0.0-alpha.34",
-    "@material-ui/styles": "^5.0.0-alpha.33",
-    "@material-ui/utils": "^5.0.0-alpha.33",
-    "@react-pdf/renderer": "^2.0.12",
-    "@reduxjs/toolkit": "^1.7.1",
-    "@ronchalant/react-loading-overlay": "^1.1.0",
-    "@testing-library/jest-dom": "^5.11.6",
-    "apexcharts": "^3.26.3",
-    "autosuggest-highlight": "^3.1.1",
-    "axios": "^0.21.1",
-    "change-case": "^4.1.2",
-    "date-fns": "^2.21.3",
-    "emoji-mart": "^3.0.0",
-    "faker": "^5.5.3",
-    "firebase": "^8.6.1",
-    "formik": "^2.2.7",
-    "framer-motion": "^4.1.17",
-    "gray-matter": "^4.0.3",
-    "highlight.js": "^10.7.2",
-    "history": "^5.0.0",
-    "i18next": "^20.2.4",
-    "i18next-browser-languagedetector": "^6.1.1",
-    "jsonwebtoken": "^8.5.1",
-    "jss": "^10.5.1",
-    "jss-rtl": "^0.3.0",
-    "jwt-decode": "^3.1.2",
-    "lazysizes": "^5.3.2",
-    "lodash": "^4.17.21",
-    "notistack": "^1.0.9",
-    "nprogress": "^0.2.0",
-    "numeral": "^2.0.6",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-apexcharts": "^1.3.9",
-    "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^17.0.2",
-    "react-dropzone": "^11.3.2",
-    "react-google-login": "^5.2.2",
-    "react-google-one-tap-login": "^0.1.0",
-    "react-helmet-async": "^1.0.9",
-    "react-i18next": "^11.8.13",
-    "react-image-lightbox": "^5.1.1",
-    "react-infinite-scroll-component": "^6.1.0",
-    "react-intersection-observer": "^8.32.0",
-    "react-markdown": "^6.0.2",
-    "react-phone-input-2": "^2.15.0",
-    "react-quill": "^2.0.0-beta.2",
-    "react-redux": "^7.2.4",
-    "react-router": "^6.0.0-beta.0",
-    "react-router-dom": "^6.0.0-beta.0",
-    "react-scripts": "4.0.0",
-    "react-scroll": "^1.8.1",
-    "react-slick": "^0.28.0",
-    "redux": "^4.1.0",
-    "redux-logger": "^3.0.6",
-    "rehype-highlight": "^4.1.0",
-    "rehype-raw": "^5.1.0",
-    "simplebar": "^5.3.3",
-    "simplebar-react": "^2.3.3",
-    "slick-carousel": "^1.8.1",
-    "stylis": "^4.0.10",
-    "stylis-plugin-rtl": "^2.1.0",
-    "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1",
-    "yup": "^0.32.9"
+    "axios": "^1.13.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/eslint-parser": "^7.14.3",
-    "eslint": "^7.26.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-flowtype": "^5.7.2",
-    "eslint-plugin-import": "^2.23.2",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.2.1"
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.2.4"
   }
 }

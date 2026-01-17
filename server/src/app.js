@@ -9,12 +9,11 @@ import cors from './middlewares/cors.js';
 import error from './middlewares/error.js';
 import logger from './middlewares/logger.js';
 
-import routesV1 from './routes/v1/index.js';
-import routesV2 from './routes/v2/index.js';
+import routes from './routes/index.js';
+
 
 import LogUtils from './utils/LogUtils.js';
 import configs from './configs.js';
-
 //------------------------------------------------------------------------------
 
 const app = express();
@@ -61,8 +60,8 @@ app.use(express.json({ limit: '30mb' }));
 
 // Routes which should handle requests
 app.get('/', (_, res) => res.render("public/index")); // home page
-app.use('/api/v1', routesV1);                           // api v1 routes
-app.use('/api/v2', routesV2);                           // api v2 routes
+app.use('/api', routes);             
+
 
 
 // Error handling
